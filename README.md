@@ -1,6 +1,6 @@
 # ARObjectYoloRect
 
-![Sample](https://github.com/newrachael/ARObjectYoloRect/blob/main/Image/YoloCup.jpeg?raw=true)
+<img src="https://github.com/newrachael/ARObjectYoloRect/blob/main/Image/YoloCup.jpeg?raw=true" width="280" />
 
 ## Introduction
 
