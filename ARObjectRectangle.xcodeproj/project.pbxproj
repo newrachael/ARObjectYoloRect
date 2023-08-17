@@ -8,21 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		EC77A4E32A8E14990099E30E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77A4E22A8E14990099E30E /* AppDelegate.swift */; };
-		EC77A4E52A8E14990099E30E /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = EC77A4E42A8E14990099E30E /* art.scnassets */; };
 		EC77A4E72A8E14990099E30E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC77A4E62A8E14990099E30E /* ViewController.swift */; };
 		EC77A4EA2A8E14990099E30E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC77A4E82A8E14990099E30E /* Main.storyboard */; };
 		EC77A4EC2A8E149C0099E30E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC77A4EB2A8E149C0099E30E /* Assets.xcassets */; };
 		EC77A4EF2A8E149C0099E30E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EC77A4ED2A8E149C0099E30E /* LaunchScreen.storyboard */; };
+		EC77A4F62A8E1A510099E30E /* yolov8s.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = EC77A4F52A8E1A510099E30E /* yolov8s.mlpackage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EC77A4DF2A8E14990099E30E /* ARObjectRectangle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARObjectRectangle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC77A4E22A8E14990099E30E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EC77A4E42A8E14990099E30E /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		EC77A4E62A8E14990099E30E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EC77A4E92A8E14990099E30E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EC77A4EB2A8E149C0099E30E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC77A4EE2A8E149C0099E30E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EC77A4F52A8E1A510099E30E /* yolov8s.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = yolov8s.mlpackage; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,8 +55,8 @@
 		EC77A4E12A8E14990099E30E /* ARObjectRectangle */ = {
 			isa = PBXGroup;
 			children = (
+				EC77A4F52A8E1A510099E30E /* yolov8s.mlpackage */,
 				EC77A4E22A8E14990099E30E /* AppDelegate.swift */,
-				EC77A4E42A8E14990099E30E /* art.scnassets */,
 				EC77A4E62A8E14990099E30E /* ViewController.swift */,
 				EC77A4E82A8E14990099E30E /* Main.storyboard */,
 				EC77A4EB2A8E149C0099E30E /* Assets.xcassets */,
@@ -123,7 +123,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC77A4E52A8E14990099E30E /* art.scnassets in Resources */,
 				EC77A4EF2A8E149C0099E30E /* LaunchScreen.storyboard in Resources */,
 				EC77A4EC2A8E149C0099E30E /* Assets.xcassets in Resources */,
 				EC77A4EA2A8E14990099E30E /* Main.storyboard in Resources */,
@@ -137,6 +136,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC77A4F62A8E1A510099E30E /* yolov8s.mlpackage in Sources */,
 				EC77A4E72A8E14990099E30E /* ViewController.swift in Sources */,
 				EC77A4E32A8E14990099E30E /* AppDelegate.swift in Sources */,
 			);
@@ -293,8 +293,8 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -323,8 +323,8 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

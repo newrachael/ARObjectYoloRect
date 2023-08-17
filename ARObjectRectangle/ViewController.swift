@@ -9,66 +9,89 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 
     @IBOutlet var sceneView: ARSCNView!
+    var boundingBoxView: UIView?
+    var labelView: UILabel?
+
+    lazy var yoloRequest: VNCoreMLRequest = {
+        do {
+            let model = try yolov8s().model
+            let vnModel = try VNCoreMLModel(for: model)
+            self.yoloRequest = VNCoreMLRequest(model: vnModel)
+            self.yoloRequest.imageCropAndScaleOption = .scaleFit
+            return self.yoloRequest
+        } catch let error {
+            fatalError("mlmodel error.")
+        }
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Set the view's delegate
         sceneView.delegate = self
-        
-        // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
-        
-        // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        
-        // Set the scene to the view
-        sceneView.scene = scene
+        sceneView.debugOptions = .showBoundingBoxes
+        sceneView.session.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
-
-        // Run the view's session
         sceneView.session.run(configuration)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        // Pause the view's session
         sceneView.session.pause()
     }
-
-    // MARK: - ARSCNViewDelegate
-    
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-     
-        return node
+    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        let pixelBuffer = frame.capturedImage
+        var ciImage = CIImage(cvPixelBuffer: pixelBuffer, options: [:])
+        ciImage = ciImage.oriented(.right)
+        let aspect =  sceneView.bounds.width / sceneView.bounds.height
+        let estimateWidth = ciImage.extent.height * aspect
+        let cropped = ciImage.cropped(to: CGRect(
+            x: ciImage.extent.width / 2 - estimateWidth / 2,
+            y: 0,
+            width: estimateWidth,
+            height: ciImage.extent.height
+        ))
+        let handler = VNImageRequestHandler(ciImage: cropped, options: [:])
+        do {
+            try handler.perform([yoloRequest])
+            guard let result = yoloRequest.results?.first as? VNRecognizedObjectObservation else { return }
+            drawBoundingBox(on: result)
+        } catch let error {
+            print(error)
+        }
     }
-*/
     
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
-        
-    }
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
-    }
+    func drawBoundingBox(on observation: VNRecognizedObjectObservation) {
+       DispatchQueue.main.async {
+           let screenSize = self.sceneView.bounds.size
+           let boundingBox = observation.boundingBox
+           let origin = CGPoint(x: boundingBox.minX * screenSize.width, y: (1 - boundingBox.maxY) * screenSize.height)
+           let size = CGSize(width: boundingBox.width * screenSize.width, height: boundingBox.height * screenSize.height)
+           
+           if self.boundingBoxView == nil {
+               self.boundingBoxView = UIView()
+               self.boundingBoxView?.backgroundColor = UIColor.red.withAlphaComponent(0.3)
+               self.boundingBoxView?.layer.borderColor = UIColor.red.cgColor
+               self.boundingBoxView?.layer.borderWidth = 2
+               self.view.addSubview(self.boundingBoxView!)
+           }
+           self.boundingBoxView?.frame = CGRect(origin: origin, size: size)
+           
+           if self.labelView == nil {
+               self.labelView = UILabel()
+               self.labelView?.textColor = UIColor.red
+               self.labelView?.backgroundColor = UIColor.white.withAlphaComponent(0.6)
+               self.view.addSubview(self.labelView!)
+           }
+           self.labelView?.text = observation.labels.first?.identifier ?? ""
+           self.labelView?.sizeToFit()
+           self.labelView?.center = CGPoint(x: origin.x, y: origin.y - (self.labelView?.frame.height ?? 0) / 2)
+       }
+   }
 }
