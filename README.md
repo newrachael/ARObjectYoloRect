@@ -10,7 +10,7 @@ Includes code to map the coordinate system recognized by Yolo to ARSCNView.
 
 
 ## Prerequisites
-[Yolov8](https://github.com/ultralytics/ultralytics)
-[Yolov8s, coreml](https://github.com/john-rocky/CoreML-Models#yolov8)
+[Yolov8](https://github.com/ultralytics/ultralytics)  
+[Yolov8s coreml](https://github.com/john-rocky/CoreML-Models#yolov8)
 
 
